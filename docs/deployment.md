@@ -31,11 +31,23 @@ persistent hosting.
 
 ## Cloudflare Pages
 
-Create the free Direct Upload project once:
+The production Pages project is connected directly to GitHub:
+
+- project: `form27-wordpress`;
+- repository: `R1chardR0e/form27-wordpress`;
+- production branch: `main`;
+- build command: `npm run export:static`;
+- build output directory: `dist`;
+- public URL: <https://form27-wordpress.pages.dev/>.
+
+Every push to `main` triggers a Cloudflare build and production deployment. The
+Pages build uses the checked-in `wrangler.toml`, while the exporter creates the
+same strict static artifact exercised by the local and GitHub Actions checks.
+
+Direct Upload remains available as a recovery path:
 
 ```bash
 npx wrangler login
-npx wrangler pages project create form27-wordpress
 npm run export:static
 npm run deploy:pages
 ```
@@ -44,7 +56,8 @@ If the name is unavailable, use `form27-lighting` in `wrangler.toml`, the npm
 deploy script and GitHub workflow together. Do not silently publish under a
 different account or project.
 
-For GitHub Actions, add repository secrets:
+The separate GitHub Actions deploy job is optional. To enable it as a fallback,
+add repository secrets:
 
 - `CLOUDFLARE_API_TOKEN`: scoped to Pages edit/deploy for this account.
 - `CLOUDFLARE_ACCOUNT_ID`: the target Cloudflare account ID.
