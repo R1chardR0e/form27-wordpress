@@ -98,9 +98,14 @@ try {
 
 try {
   const homePattern = await read("wp-content/themes/form27/patterns/home.php");
-  if (!homePattern.includes("wp_make_link_relative( $form27_theme_uri )")) {
+  if (
+    !homePattern.includes(
+      "'playground.wordpress.net' === $form27_theme_host",
+    ) ||
+    !homePattern.includes("set_url_scheme( $form27_theme_uri, 'https' )")
+  ) {
     errors.push(
-      "The home pattern must keep theme image URLs relative for HTTPS Playground and subdirectory installs",
+      "The home pattern must upgrade official Playground theme images to HTTPS",
     );
   }
 } catch (error) {

@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 final class F27_Seeder {
 	private const CORE_SAMPLE_PAGE_HASH = 'bdd3f0e81bba85fbadd3613f68d15f8f5b06aa2745bbd51a74cf6d2ec440072f';
-	private const MIGRATION_VERSION     = '2026-08-09.4';
+	private const MIGRATION_VERSION     = '2026-08-09.5';
 	private const MIGRATION_OPTION      = 'f27_migration_version';
 	private const MEDIA_MARKER          = '_f27_seed_asset';
 
@@ -366,8 +366,15 @@ final class F27_Seeder {
 			return $content;
 		}
 
-		$relative_theme_uri = untrailingslashit( wp_make_link_relative( $theme_uri ) );
-		$asset_files        = array(
+		$scheme_neutral_theme_uri = preg_replace( '#^https?:#i', '', $theme_uri );
+		if ( ! is_string( $scheme_neutral_theme_uri ) ) {
+			return $content;
+		}
+		$scheme_neutral_theme_uri = untrailingslashit( $scheme_neutral_theme_uri );
+		$target_theme_uri         = 'playground.wordpress.net' === $theme_host
+			? untrailingslashit( set_url_scheme( $theme_uri, 'https' ) )
+			: $theme_uri;
+		$asset_files              = array(
 			'hero.avif',
 			'hero.webp',
 			'product-line-s48.avif',
@@ -377,20 +384,24 @@ final class F27_Seeder {
 			'material-finishes.avif',
 			'material-finishes.webp',
 		);
-		$absolute_bases     = array_unique(
+		$legacy_bases             = array_unique(
 			array(
 				untrailingslashit( set_url_scheme( $theme_uri, 'http' ) ),
 				untrailingslashit( set_url_scheme( $theme_uri, 'https' ) ),
+				untrailingslashit( wp_make_link_relative( $theme_uri ) ),
+				$scheme_neutral_theme_uri,
 			)
 		);
 
-		foreach ( $absolute_bases as $absolute_base ) {
+		foreach ( $legacy_bases as $legacy_base ) {
 			foreach ( $asset_files as $asset_file ) {
-				$content = str_replace(
-					$absolute_base . '/assets/images/' . $asset_file,
-					$relative_theme_uri . '/assets/images/' . $asset_file,
-					$content
-				);
+				foreach ( array( 'src', 'srcset' ) as $attribute ) {
+					$content = str_replace(
+						$attribute . '="' . $legacy_base . '/assets/images/' . $asset_file . '"',
+						$attribute . '="' . $target_theme_uri . '/assets/images/' . $asset_file . '"',
+						$content
+					);
+				}
 			}
 		}
 

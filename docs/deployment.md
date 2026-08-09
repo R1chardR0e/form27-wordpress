@@ -9,9 +9,12 @@ latest GitHub Release. Create that release before sharing the Playground URL:
 npm ci
 npm run check
 npm run package
-git tag v1.0.0
-git push origin main --tags
+git tag vX.Y.Z
+git push origin main
+git push origin vX.Y.Z
 ```
+
+Replace `vX.Y.Z` with the new, unused semantic version for that release.
 
 The release workflow publishes both ZIPs, the Blueprint, `manifest.json` and
 `SHA256SUMS.txt`. The ZIP root folders are `form27/` and `form27-core/`, so both

@@ -7,24 +7,10 @@
  * @package Form27
  */
 
-$form27_theme_uri   = untrailingslashit( get_theme_file_uri() );
-$form27_theme_host  = strtolower( (string) wp_parse_url( $form27_theme_uri, PHP_URL_HOST ) );
-$form27_theme_port  = (int) wp_parse_url( $form27_theme_uri, PHP_URL_PORT );
-$form27_theme_path  = trailingslashit( (string) wp_parse_url( $form27_theme_uri, PHP_URL_PATH ) );
-$form27_local_bases = array( home_url( '/' ), site_url( '/' ) );
-
-foreach ( $form27_local_bases as $form27_local_base ) {
-	$form27_local_host = strtolower( (string) wp_parse_url( $form27_local_base, PHP_URL_HOST ) );
-	$form27_local_port = (int) wp_parse_url( $form27_local_base, PHP_URL_PORT );
-	$form27_local_path = trailingslashit( (string) wp_parse_url( $form27_local_base, PHP_URL_PATH ) );
-	if (
-		$form27_theme_host === $form27_local_host
-		&& $form27_theme_port === $form27_local_port
-		&& str_starts_with( $form27_theme_path, $form27_local_path )
-	) {
-		$form27_theme_uri = untrailingslashit( wp_make_link_relative( $form27_theme_uri ) );
-		break;
-	}
+$form27_theme_uri  = untrailingslashit( get_theme_file_uri() );
+$form27_theme_host = strtolower( (string) wp_parse_url( $form27_theme_uri, PHP_URL_HOST ) );
+if ( 'playground.wordpress.net' === $form27_theme_host ) {
+	$form27_theme_uri = untrailingslashit( set_url_scheme( $form27_theme_uri, 'https' ) );
 }
 ?>
 
