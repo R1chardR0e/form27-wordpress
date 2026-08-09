@@ -1,0 +1,62 @@
+{
+  "$schema": "https://playground.wordpress.net/blueprint-schema.json",
+  "meta": {
+    "title": "FORM 27",
+    "description": "Интерактивный WordPress-демосайт систем архитектурного света",
+    "author": "R1chardR0e",
+    "categories": ["Demo", "Design", "Portfolio"]
+  },
+  "preferredVersions": {
+    "php": "8.3",
+    "wp": "7.0.3"
+  },
+  "features": {
+    "networking": true
+  },
+  "landingPage": "/",
+  "steps": [
+    {
+      "step": "installPlugin",
+      "pluginData": {
+        "resource": "url",
+        "url": "https://github.com/R1chardR0e/form27-wordpress/releases/latest/download/form27-core.zip"
+      },
+      "options": {
+        "activate": true
+      }
+    },
+    {
+      "step": "installTheme",
+      "themeData": {
+        "resource": "url",
+        "url": "https://github.com/R1chardR0e/form27-wordpress/releases/latest/download/form27-theme.zip"
+      },
+      "options": {
+        "activate": true,
+        "importStarterContent": false
+      }
+    },
+    {
+      "step": "setSiteLanguage",
+      "language": "ru_RU"
+    },
+    {
+      "step": "setSiteOptions",
+      "options": {
+        "blogname": "FORM 27",
+        "blogdescription": "Системы архитектурного света",
+        "blog_public": "0",
+        "permalink_structure": "/%postname%/",
+        "timezone_string": "Europe/Moscow"
+      }
+    },
+    {
+      "step": "runPHP",
+      "code": "<?php require_once '/wordpress/wp-load.php'; if ( class_exists( 'F27_Seeder' ) ) { F27_Seeder::seed( false, true ); }"
+    },
+    {
+      "step": "login",
+      "username": "admin"
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "$schema": "https://playground.wordpress.net/blueprint-schema.json",
+  "features": {
+    "networking": true
+  },
+  "landingPage": "/",
+  "steps": [
+    {
+      "step": "setSiteLanguage",
+      "language": "ru_RU"
+    },
+    {
+      "step": "activatePlugin",
+      "pluginName": "FORM 27 Core",
+      "pluginPath": "form27-core/form27-core.php"
+    },
+    {
+      "step": "activateTheme",
+      "themeFolderName": "form27"
+    },
+    {
+      "step": "setSiteOptions",
+      "options": {
+        "blogname": "FORM 27",
+        "blogdescription": "Системы архитектурного света",
+        "blog_public": "0",
+        "permalink_structure": "/%postname%/",
+        "timezone_string": "Europe/Moscow"
+      }
+    },
+    {
+      "step": "runPHP",
+      "code": "<?php require_once '/wordpress/wp-load.php'; if ( class_exists( 'F27_Seeder' ) ) { F27_Seeder::seed( false, true ); }"
+    }
+  ]
+}

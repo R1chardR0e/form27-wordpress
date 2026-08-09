@@ -1,0 +1,49 @@
+{
+  "name": "form27-wordpress",
+  "version": "1.0.0",
+  "private": true,
+  "description": "FORM 27 architectural lighting WordPress demo",
+  "type": "module",
+  "engines": {
+    "node": ">=20.18"
+  },
+  "allowScripts": {
+    "esbuild@0.28.1": true,
+    "fs-ext-extra-prebuilt@2.2.7": false,
+    "workerd@1.20260801.1": true
+  },
+  "scripts": {
+    "dev": "node scripts/playground.mjs",
+    "dev:ci": "node scripts/playground.mjs --ci --port=9400",
+    "bootstrap:docker": "node scripts/bootstrap-docker.mjs",
+    "export:static": "node scripts/export-static.mjs",
+    "preview:static": "wrangler pages dev dist --port=8788",
+    "serve:static:test": "node scripts/serve-static.mjs --port=8799",
+    "package": "node scripts/package.mjs",
+    "deploy:pages": "wrangler pages deploy dist --project-name=form27-wordpress",
+    "lint:js": "eslint scripts playwright.config.mjs eslint.config.mjs wp-content/themes/form27/assets/js wp-content/plugins/form27-core/assets/js",
+    "format:check": "prettier --check package.json playground-blueprint.json playground-local.json playwright.config.mjs eslint.config.mjs lighthouserc.json lighthouserc.mobile.json scripts docs .github README.md",
+    "format": "prettier --write package.json playground-blueprint.json playground-local.json playwright.config.mjs eslint.config.mjs lighthouserc.json lighthouserc.mobile.json scripts docs .github README.md",
+    "validate": "node scripts/validate-project.mjs",
+    "test:unit": "node --test scripts/tests/*.test.mjs",
+    "test:e2e": "playwright test",
+    "test:e2e:static": "cross-env FORM27_STATIC=1 playwright test",
+    "test:lighthouse": "npm run test:lighthouse:desktop && npm run test:lighthouse:mobile",
+    "test:lighthouse:desktop": "lhci autorun --config=lighthouserc.json",
+    "test:lighthouse:mobile": "lhci autorun --config=lighthouserc.mobile.json",
+    "check": "npm run lint:js && npm run format:check && npm run validate && npm run test:unit"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "4.12.1",
+    "@eslint/js": "10.0.1",
+    "@lhci/cli": "0.15.1",
+    "@playwright/test": "1.62.1",
+    "@wp-playground/cli": "3.1.48",
+    "archiver": "8.0.0",
+    "cheerio": "1.2.0",
+    "cross-env": "10.1.0",
+    "eslint": "10.8.1",
+    "prettier": "3.9.6",
+    "wrangler": "4.120.0"
+  }
+}

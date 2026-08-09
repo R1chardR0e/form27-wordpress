@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<ruleset name="FORM 27 WordPress">
+	<description>WordPress Coding Standards and PHP 8.2+ compatibility.</description>
+	<file>wp-content/plugins/form27-core</file>
+	<file>wp-content/themes/form27</file>
+	<exclude-pattern>*/vendor/*</exclude-pattern>
+	<exclude-pattern>*/node_modules/*</exclude-pattern>
+	<arg name="basepath" value="."/>
+	<arg name="colors"/>
+	<arg name="extensions" value="php"/>
+	<arg value="sp"/>
+	<rule ref="WordPress-Core"/>
+	<rule ref="WordPress-Extra"/>
+	<rule ref="PHPCompatibilityWP">
+		<properties>
+			<property name="testVersion" value="8.2-"/>
+		</properties>
+	</rule>
+	<config name="minimum_supported_wp_version" value="7.0"/>
+	<config name="testVersion" value="8.2-"/>
+</ruleset>

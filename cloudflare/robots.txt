@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: /
+
+# FORM 27 is a fictional portfolio demonstration, not a trading business.

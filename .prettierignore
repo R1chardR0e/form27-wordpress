@@ -1,0 +1,7 @@
+dist/
+node_modules/
+release/
+vendor/
+wp-content/
+package-lock.json
+LICENSE

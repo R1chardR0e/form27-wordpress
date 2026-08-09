@@ -1,0 +1,1352 @@
+@font-face {
+	font-family: "Onest";
+	src: url("../fonts/onest-cyrillic-wght-normal.woff2") format("woff2-variations");
+	font-display: swap;
+	font-style: normal;
+	font-weight: 100 900;
+	unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+
+@font-face {
+	font-family: "Onest";
+	src: url("../fonts/onest-latin-wght-normal.woff2") format("woff2-variations");
+	font-display: swap;
+	font-style: normal;
+	font-weight: 100 900;
+	unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+	font-family: "IBM Plex Mono";
+	src: url("../fonts/ibm-plex-mono-cyrillic-400.woff2") format("woff2");
+	font-display: swap;
+	font-style: normal;
+	font-weight: 400;
+	unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+
+@font-face {
+	font-family: "IBM Plex Mono";
+	src: url("../fonts/ibm-plex-mono-latin-400.woff2") format("woff2");
+	font-display: swap;
+	font-style: normal;
+	font-weight: 400;
+	unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+	font-family: "IBM Plex Mono";
+	src: url("../fonts/ibm-plex-mono-cyrillic-600.woff2") format("woff2");
+	font-display: swap;
+	font-style: normal;
+	font-weight: 600;
+	unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+
+@font-face {
+	font-family: "IBM Plex Mono";
+	src: url("../fonts/ibm-plex-mono-latin-600.woff2") format("woff2");
+	font-display: swap;
+	font-style: normal;
+	font-weight: 600;
+	unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+:root {
+	--f27-bg: #f2f1ec;
+	--f27-surface: #e3e5e2;
+	--f27-surface-strong: #d4d7d4;
+	--f27-text: #171918;
+	--f27-muted: #555a58;
+	--f27-line: #a4a8a6;
+	--f27-accent: #f05a28;
+	--f27-on-accent: #171918;
+	--f27-error: #a72e20;
+	--f27-success: #1e6b4e;
+	--f27-radius: 2px;
+	--f27-header-height: 72px;
+	--f27-gutter: clamp(1rem, 2.8vw, 2.5rem);
+	--f27-section-space: clamp(5rem, 10vw, 10rem);
+	--f27-ease: cubic-bezier(0.16, 1, 0.3, 1);
+	--f27-layer-header: 20;
+	--f27-layer-dialog: 100;
+	color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root:not([data-theme]) {
+		--f27-bg: #171918;
+		--f27-surface: #242725;
+		--f27-surface-strong: #303432;
+		--f27-text: #f2f1ec;
+		--f27-muted: #b8bcba;
+		--f27-line: #484d4a;
+		--f27-error: #ff8a73;
+		--f27-success: #83c9a8;
+		color-scheme: dark;
+	}
+}
+
+:root[data-theme="dark"] {
+	--f27-bg: #171918;
+	--f27-surface: #242725;
+	--f27-surface-strong: #303432;
+	--f27-text: #f2f1ec;
+	--f27-muted: #b8bcba;
+	--f27-line: #484d4a;
+	--f27-error: #ff8a73;
+	--f27-success: #83c9a8;
+	color-scheme: dark;
+}
+
+:root[data-theme="light"] {
+	--f27-bg: #f2f1ec;
+	--f27-surface: #e3e5e2;
+	--f27-surface-strong: #d4d7d4;
+	--f27-text: #171918;
+	--f27-muted: #555a58;
+	--f27-line: #a4a8a6;
+	--f27-error: #a72e20;
+	--f27-success: #1e6b4e;
+	color-scheme: light;
+}
+
+html {
+	background: var(--f27-bg);
+	scroll-behavior: smooth;
+	scroll-padding-top: calc(var(--f27-header-height) + 1.5rem);
+}
+
+body.form27-theme {
+	min-width: 320px;
+	margin: 0;
+	background: var(--f27-bg) !important;
+	color: var(--f27-text) !important;
+	font-family: Onest, "Segoe UI Variable", "Segoe UI", Arial, sans-serif;
+	font-synthesis: none;
+	text-rendering: optimizeLegibility;
+}
+
+body.f27-dialog-open {
+	overflow: hidden;
+}
+
+body.form27-theme *,
+body.form27-theme *::before,
+body.form27-theme *::after {
+	box-sizing: border-box;
+}
+
+body.form27-theme :where(img, svg, video) {
+	display: block;
+	max-width: 100%;
+}
+
+body.form27-theme :where(a, button, input, select, textarea) {
+	-webkit-tap-highlight-color: transparent;
+}
+
+body.form27-theme :where(a, button, input, select, textarea):focus-visible {
+	outline: 2px solid var(--f27-accent);
+	outline-offset: 3px;
+}
+
+body.form27-theme a {
+	color: inherit;
+	text-underline-offset: 0.2em;
+}
+
+body.form27-theme p,
+body.form27-theme li {
+	text-wrap: pretty;
+}
+
+body.form27-theme h1,
+body.form27-theme h2,
+body.form27-theme h3 {
+	text-wrap: balance;
+}
+
+.f27-main {
+	margin-block-start: 0;
+	overflow: clip;
+}
+
+.f27-main > * {
+	margin-block-start: 0;
+}
+
+.alignwide {
+	width: min(100%, 1440px);
+}
+
+.f27-section {
+	position: relative;
+	margin-block-start: 0;
+	padding-block: var(--f27-section-space);
+	background: var(--f27-bg);
+	color: var(--f27-text);
+}
+
+.f27-section + .f27-section::before {
+	position: absolute;
+	top: 0;
+	right: var(--f27-gutter);
+	left: var(--f27-gutter);
+	height: 1px;
+	background: var(--f27-line);
+	content: "";
+	opacity: 0.55;
+}
+
+.f27-section-heading {
+	margin-inline: 0;
+	margin-bottom: clamp(2.5rem, 5vw, 5.5rem);
+}
+
+.f27-section-heading--stacked {
+	max-width: 58rem;
+}
+
+.f27-section-heading--narrow {
+	max-width: 45rem;
+	margin-left: clamp(0rem, 11vw, 10rem);
+}
+
+.f27-section-heading h2,
+.f27-specification__heading h2 {
+	max-width: 15ch;
+}
+
+.f27-section-intro {
+	max-width: 58ch;
+	margin-top: 1.5rem !important;
+	color: var(--f27-muted);
+	font-size: clamp(1rem, 1.2vw, 1.2rem);
+}
+
+.f27-eyebrow,
+.f27-post-terms {
+	margin-bottom: 1.25rem !important;
+	color: var(--f27-muted);
+	font-family: "IBM Plex Mono", "Cascadia Mono", Consolas, monospace;
+	font-weight: 600;
+	letter-spacing: 0.12em;
+	line-height: 1.2;
+	text-transform: uppercase;
+}
+
+/* Header: opaque surfaces avoid a transformed containing block around the dialog. */
+.f27-site-header {
+	position: sticky;
+	z-index: var(--f27-layer-header);
+	top: 0;
+	min-height: var(--f27-header-height);
+	margin-block-start: 0;
+	border-bottom: 1px solid var(--f27-line);
+	background: var(--f27-bg);
+	color: var(--f27-text);
+}
+
+.admin-bar .f27-site-header {
+	top: var(--wp-admin--admin-bar--height, 32px);
+}
+
+.f27-header__inner {
+	min-height: var(--f27-header-height);
+	gap: 2rem;
+	padding-inline: 0;
+}
+
+.f27-brand {
+	flex: 0 0 auto;
+	gap: 0.8rem;
+}
+
+.f27-logo {
+	margin: 0;
+}
+
+.f27-logo img {
+	max-height: 32px;
+	width: auto;
+}
+
+.f27-brand:has(.custom-logo-link) .f27-wordmark {
+	display: none;
+}
+
+.f27-wordmark,
+.f27-footer__wordmark {
+	margin: 0;
+	font-family: "IBM Plex Mono", "Cascadia Mono", Consolas, monospace;
+	font-size: 1rem;
+	font-weight: 700;
+	letter-spacing: 0.08em;
+	line-height: 1;
+}
+
+.f27-wordmark a,
+.f27-footer__wordmark a {
+	text-decoration: none;
+}
+
+.f27-demo-label {
+	margin: 0;
+	padding-left: 0.8rem;
+	border-left: 1px solid var(--f27-line);
+	color: var(--f27-muted);
+	font-family: "IBM Plex Mono", "Cascadia Mono", Consolas, monospace;
+	letter-spacing: 0.04em;
+}
+
+.f27-desktop-nav {
+	margin-inline: auto 0;
+}
+
+.f27-desktop-nav .wp-block-navigation__container {
+	gap: clamp(1rem, 2vw, 2.25rem);
+}
+
+.f27-desktop-nav a,
+.f27-site-footer .wp-block-navigation a {
+	position: relative;
+	white-space: nowrap;
+}
+
+.f27-desktop-nav a::after {
+	position: absolute;
+	right: 0;
+	bottom: -0.45rem;
+	left: 0;
+	height: 1px;
+	background: var(--f27-accent);
+	content: "";
+	transform: scaleX(0);
+	transform-origin: right;
+	transition: transform 260ms var(--f27-ease);
+}
+
+.f27-desktop-nav a:hover::after,
+.f27-desktop-nav .current-menu-item > a::after {
+	transform: scaleX(1);
+	transform-origin: left;
+}
+
+.f27-header-actions {
+	display: flex;
+	flex: 0 0 auto;
+	align-items: center;
+	gap: 0.5rem;
+}
+
+.f27-theme-toggle,
+.f27-menu-open,
+.f27-menu-dialog button,
+.f27-menu-dialog__footer a {
+	min-height: 40px;
+	padding: 0.65rem 0.85rem;
+	border: 1px solid var(--f27-line);
+	border-radius: var(--f27-radius);
+	background: transparent;
+	color: var(--f27-text);
+	font: 600 0.7rem/1 "IBM Plex Mono", "Cascadia Mono", Consolas, monospace;
+	letter-spacing: 0.04em;
+	text-decoration: none;
+	text-transform: uppercase;
+	white-space: nowrap;
+	cursor: pointer;
+	transition: background-color 220ms var(--f27-ease), color 220ms var(--f27-ease), transform 220ms var(--f27-ease);
+}
+
+.f27-theme-toggle:hover,
+.f27-menu-open:hover,
+.f27-menu-dialog button:hover {
+	background: var(--f27-surface);
+}
+
+.f27-theme-toggle:active,
+.f27-menu-open:active,
+.f27-menu-dialog button:active,
+.f27-menu-dialog__footer a:active {
+	transform: translateY(1px);
+}
+
+.f27-menu-open {
+	display: none;
+}
+
+.f27-menu-dialog {
+	z-index: var(--f27-layer-dialog);
+	width: 100%;
+	max-width: none;
+	height: 100dvh;
+	max-height: none;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	border-radius: 0;
+	background: var(--f27-bg);
+	color: var(--f27-text);
+}
+
+.f27-menu-dialog::backdrop {
+	background: rgb(23 25 24 / 0.72);
+}
+
+.f27-menu-dialog[open] {
+	display: grid;
+	grid-template-rows: auto 1fr auto;
+}
+
+.f27-menu-dialog__bar,
+.f27-menu-dialog__footer {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 1rem;
+	min-height: var(--f27-header-height);
+	padding: 1rem var(--f27-gutter);
+	border-bottom: 1px solid var(--f27-line);
+}
+
+.f27-menu-dialog__bar strong {
+	font-family: "IBM Plex Mono", "Cascadia Mono", Consolas, monospace;
+	font-size: 1rem;
+	letter-spacing: 0.08em;
+}
+
+.f27-menu-dialog__nav {
+	display: grid;
+	align-content: center;
+	gap: 0;
+	padding: 2rem var(--f27-gutter);
+}
+
+.f27-menu-dialog__nav a {
+	display: flex;
+	align-items: center;
+	min-height: clamp(4rem, 15vw, 7.5rem);
+	border-bottom: 1px solid var(--f27-line);
+	font-size: clamp(2rem, 9vw, 5rem);
+	font-weight: 530;
+	letter-spacing: -0.045em;
+	line-height: 0.95;
+	text-decoration: none;
+}
+
+.f27-menu-dialog__nav a:first-child {
+	border-top: 1px solid var(--f27-line);
+}
+
+.f27-menu-dialog__nav a:hover {
+	padding-left: 0.35rem;
+	color: var(--f27-accent);
+}
+
+.f27-menu-dialog__footer {
+	border-top: 1px solid var(--f27-line);
+	border-bottom: 0;
+}
+
+.f27-menu-dialog__footer a {
+	border-color: var(--f27-accent);
+	background: var(--f27-accent);
+	color: var(--f27-on-accent);
+}
+
+/* Buttons */
+.wp-block-button__link,
+body.form27-theme button,
+body.form27-theme input[type="submit"] {
+	border-radius: var(--f27-radius) !important;
+}
+
+.wp-block-button__link {
+	min-width: 10rem;
+	white-space: nowrap;
+	transition: transform 220ms var(--f27-ease), background-color 220ms var(--f27-ease), color 220ms var(--f27-ease);
+}
+
+.wp-block-button__link:hover {
+	transform: translateY(-2px);
+}
+
+.wp-block-button__link:active {
+	transform: translateY(1px);
+}
+
+.wp-block-button.is-style-outline-signal .wp-block-button__link {
+	border: 1px solid var(--f27-line);
+	background: transparent;
+	color: var(--f27-text);
+}
+
+.wp-block-button.is-style-outline-signal .wp-block-button__link:hover {
+	border-color: var(--f27-text);
+	background: var(--f27-surface);
+}
+
+/* Hero */
+.f27-hero {
+	display: grid;
+	min-height: calc(100dvh - var(--f27-header-height));
+	padding-block: clamp(1.5rem, 4vh, 3rem);
+}
+
+.f27-hero__grid {
+	display: grid;
+	grid-template-columns: minmax(0, 7fr) minmax(0, 6fr);
+	min-height: calc(100dvh - var(--f27-header-height) - clamp(3rem, 8vh, 6rem));
+	gap: clamp(2rem, 5vw, 6rem);
+	align-items: stretch;
+}
+
+.f27-hero__copy {
+	display: flex;
+	align-self: center;
+	flex-direction: column;
+	align-items: flex-start;
+	margin: 0;
+}
+
+.f27-hero__title {
+	max-width: 17ch;
+	font-size: clamp(3.25rem, 5.4vw, 4.65rem) !important;
+	letter-spacing: -0.06em;
+	line-height: 0.93;
+}
+
+.f27-hero__lead {
+	max-width: 36rem;
+	margin-top: clamp(1.25rem, 3vh, 2rem) !important;
+	color: var(--f27-muted);
+}
+
+.f27-hero__actions {
+	margin-top: clamp(1.5rem, 4vh, 2.5rem);
+}
+
+.f27-hero__media {
+	position: relative;
+	min-height: 0;
+	margin: 0;
+	overflow: hidden;
+	border-radius: var(--f27-radius);
+	background: var(--f27-surface);
+}
+
+.f27-hero__media::after {
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	width: clamp(4px, 0.7vw, 10px);
+	height: 30%;
+	background: var(--f27-accent);
+	content: "";
+}
+
+.f27-responsive-picture {
+	display: block;
+	width: 100%;
+	height: 100%;
+}
+
+.f27-hero__media img {
+	width: 100%;
+	height: 100%;
+	min-height: 28rem;
+	object-fit: cover;
+}
+
+/* Catalog and plugin layout integration */
+.f27-catalog-section > :where(.wp-block-form27-catalog, .f27-catalog, [data-form27-catalog]),
+.f27-configurator-section > :where(.wp-block-form27-configurator, .f27-configurator, [data-form27-configurator]),
+.f27-cases-section > :where(.wp-block-form27-cases, .f27-cases, [data-form27-cases]) {
+	width: min(100%, 1440px);
+	margin-inline: auto;
+}
+
+.f27-catalog-section {
+	padding-bottom: clamp(4rem, 8vw, 8rem);
+}
+
+.f27-configurator-section {
+	padding-top: clamp(5rem, 9vw, 9rem);
+}
+
+/* Product assembly story */
+.f27-assembly__grid {
+	display: grid;
+	grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+	gap: clamp(2.5rem, 7vw, 8rem);
+	align-items: start;
+}
+
+.f27-assembly__copy {
+	position: sticky;
+	top: calc(var(--f27-header-height) + 2rem);
+	margin: 0;
+}
+
+.f27-assembly__copy > .f27-section-intro {
+	margin-bottom: clamp(2rem, 5vw, 4rem) !important;
+}
+
+.f27-assembly__parts {
+	position: relative;
+	display: grid;
+	gap: 0;
+	margin-top: clamp(2rem, 5vw, 4rem);
+}
+
+.f27-assembly__parts::before {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	width: 2px;
+	background: var(--f27-accent);
+	content: "";
+	transform: scaleY(0.25);
+	transform-origin: top;
+}
+
+.f27-assembly__part {
+	margin: 0;
+	padding: 1.25rem 0 1.5rem 1.5rem;
+	border-bottom: 1px solid var(--f27-line);
+}
+
+.f27-assembly__part--optic {
+	margin-left: clamp(0rem, 4vw, 3rem);
+}
+
+.f27-assembly__part--control {
+	margin-left: clamp(0rem, 8vw, 6rem);
+	border-bottom: 0;
+}
+
+.f27-assembly__part h3 {
+	margin-bottom: 0.5rem;
+	font-family: "IBM Plex Mono", "Cascadia Mono", Consolas, monospace;
+	font-size: 1rem !important;
+	letter-spacing: 0;
+}
+
+.f27-assembly__part p {
+	max-width: 36ch;
+	color: var(--f27-muted);
+	font-size: 0.9375rem;
+}
+
+.f27-assembly__image {
+	position: relative;
+	margin: 0;
+	overflow: hidden;
+	background: var(--f27-surface);
+}
+
+.f27-assembly__image img {
+	width: 100%;
+	height: auto;
+	min-height: 44rem;
+	aspect-ratio: 4 / 5;
+	object-fit: cover;
+}
+
+/* Cases */
+.f27-cases-section .f27-section-heading {
+	margin-right: 0;
+	margin-left: clamp(0rem, 16vw, 14rem);
+}
+
+/* Material composition */
+.f27-materials__grid {
+	display: grid;
+	grid-template-columns: minmax(0, 7fr) minmax(18rem, 4fr);
+	gap: clamp(3rem, 8vw, 9rem);
+	align-items: center;
+}
+
+.f27-materials__media {
+	display: grid;
+	grid-template-columns: minmax(0, 7fr) minmax(0, 4fr);
+	grid-template-rows: 5rem auto 5rem;
+	gap: 1rem;
+	margin: 0;
+}
+
+.f27-materials__image {
+	margin: 0;
+	overflow: hidden;
+	background: var(--f27-surface);
+}
+
+.f27-materials__image img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.f27-materials__image--metal {
+	grid-row: 1 / 3;
+}
+
+.f27-materials__image--metal img {
+	aspect-ratio: 4 / 3;
+}
+
+.f27-materials__image--optic {
+	grid-row: 2 / 4;
+}
+
+.f27-materials__image--optic img {
+	aspect-ratio: 3 / 4;
+}
+
+.f27-materials__copy {
+	margin: 0;
+}
+
+.f27-materials__facts {
+	display: grid;
+	gap: 1.5rem;
+	margin-top: clamp(2rem, 4vw, 3.5rem);
+	padding-left: clamp(1rem, 3vw, 2rem);
+	border-left: 2px solid var(--f27-accent);
+}
+
+.f27-materials__facts p {
+	color: var(--f27-muted);
+	font-family: "IBM Plex Mono", "Cascadia Mono", Consolas, monospace;
+	font-size: 0.8125rem;
+	line-height: 1.65;
+}
+
+.f27-materials__facts strong {
+	color: var(--f27-text);
+	font-weight: 650;
+}
+
+/* Specification */
+.f27-specification__heading {
+	margin: 0 0 clamp(2.5rem, 5vw, 5rem) clamp(0rem, 8vw, 7rem);
+}
+
+.f27-specification__grid {
+	display: grid;
+	grid-template-columns: minmax(0, 7fr) minmax(20rem, 5fr);
+	gap: clamp(1.5rem, 4vw, 4.5rem);
+	align-items: start;
+}
+
+.f27-specification__project,
+.f27-specification__request {
+	margin: 0;
+}
+
+.is-style-technical-panel {
+	padding: clamp(1.25rem, 3vw, 2.5rem);
+	border: 1px solid var(--f27-line);
+	border-radius: var(--f27-radius);
+	background: var(--f27-surface);
+}
+
+/* Forms shared by theme and plugin blocks */
+body.form27-theme :where(input:not([type="checkbox"]):not([type="radio"]):not([type="range"]), select, textarea) {
+	width: 100%;
+	min-height: 48px;
+	padding: 0.8rem 0.9rem;
+	border: 1px solid var(--f27-line);
+	border-radius: var(--f27-radius);
+	background: var(--f27-bg);
+	color: var(--f27-text);
+	font: inherit;
+	transition: border-color 180ms ease, background-color 180ms ease;
+}
+
+body.form27-theme textarea {
+	min-height: 8rem;
+	resize: vertical;
+}
+
+body.form27-theme :where(input, textarea)::placeholder {
+	color: var(--f27-muted);
+	opacity: 1;
+}
+
+body.form27-theme :where(input, select, textarea):focus {
+	border-color: var(--f27-accent);
+}
+
+body.form27-theme :where(label, legend) {
+	color: var(--f27-text);
+	font-weight: 550;
+}
+
+body.form27-theme :where(button, input[type="submit"]) {
+	cursor: pointer;
+}
+
+body.form27-theme :where(button, input, select, textarea):disabled {
+	cursor: not-allowed;
+	opacity: 0.58;
+}
+
+.f27-error,
+[data-state="error"] {
+	color: var(--f27-error);
+}
+
+.f27-success,
+[data-state="success"] {
+	color: var(--f27-success);
+}
+
+/* Archives and entries */
+.f27-entry,
+.f27-archive,
+.f27-index,
+.f27-search,
+.f27-product-single,
+.f27-case-single,
+.f27-not-found {
+	min-height: 65dvh;
+	padding-block: clamp(4rem, 9vw, 9rem);
+}
+
+.f27-entry__header,
+.f27-archive__header,
+.f27-case-single__header {
+	margin: 0 0 clamp(3rem, 7vw, 7rem);
+}
+
+.f27-entry__header h1,
+.f27-archive__header h1,
+.f27-case-single__header h1 {
+	max-width: 13ch;
+}
+
+.f27-archive__header p {
+	max-width: 40ch;
+	margin-top: 1.5rem;
+	color: var(--f27-muted);
+}
+
+.f27-product-single__hero {
+	display: grid;
+	grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+	gap: clamp(2rem, 6vw, 7rem);
+	align-items: center;
+}
+
+.f27-product-single__title,
+.f27-product-single__body {
+	margin: 0;
+}
+
+.f27-product-single__image {
+	margin: 0;
+	background: var(--f27-surface);
+}
+
+.f27-product-single__image img,
+.f27-case-single__image img {
+	width: 100%;
+	object-fit: cover;
+}
+
+.f27-product-single__body {
+	display: grid;
+	grid-template-columns: minmax(16rem, 4fr) minmax(0, 8fr);
+	gap: clamp(3rem, 7vw, 8rem);
+	margin-top: clamp(4rem, 9vw, 9rem);
+	align-items: start;
+}
+
+.f27-product-single__body > .wp-block-post-content {
+	margin: 0;
+}
+
+.f27-case-single__image {
+	margin-bottom: clamp(3rem, 7vw, 7rem);
+}
+
+.f27-case-single__next {
+	margin: clamp(5rem, 10vw, 10rem) auto 0;
+	padding-top: clamp(3rem, 6vw, 6rem);
+	border-top: 1px solid var(--f27-line);
+}
+
+.f27-case-single__next h2 {
+	margin-bottom: 3rem;
+}
+
+.f27-query .wp-block-post-template {
+	gap: clamp(2rem, 5vw, 5rem);
+}
+
+.f27-query__item {
+	margin: 0;
+}
+
+.f27-query__item .wp-block-post-featured-image {
+	margin-bottom: 1.25rem;
+	overflow: hidden;
+	background: var(--f27-surface);
+}
+
+.f27-query__item .wp-block-post-featured-image img {
+	transition: transform 520ms var(--f27-ease);
+}
+
+.f27-query__item:hover .wp-block-post-featured-image img {
+	transform: scale(1.025);
+}
+
+.f27-query__item .wp-block-post-title a {
+	text-decoration: none;
+}
+
+.f27-query__item .wp-block-post-excerpt {
+	color: var(--f27-muted);
+}
+
+.f27-not-found__grid {
+	display: grid;
+	grid-template-columns: minmax(0, 7fr) minmax(18rem, 5fr);
+	gap: 3rem;
+	align-items: end;
+}
+
+.f27-not-found__code {
+	color: var(--f27-accent);
+	font: 650 clamp(8rem, 28vw, 24rem)/0.75 "IBM Plex Mono", "Cascadia Mono", Consolas, monospace !important;
+	letter-spacing: -0.08em !important;
+}
+
+.f27-not-found__copy p {
+	margin-top: 1.5rem;
+	color: var(--f27-muted);
+}
+
+.f27-not-found__copy .wp-block-buttons {
+	margin-top: 2rem;
+}
+
+/* Footer */
+.f27-site-footer {
+	margin-block-start: 0;
+	padding-block: clamp(4rem, 8vw, 8rem) 2rem;
+	border-top: 1px solid var(--f27-line);
+	background: var(--f27-bg);
+	color: var(--f27-text);
+}
+
+.f27-footer__primary {
+	grid-template-columns: minmax(0, 8fr) minmax(14rem, 3fr) !important;
+	gap: clamp(3rem, 10vw, 10rem);
+}
+
+.f27-footer__statement,
+.f27-footer__links {
+	margin: 0;
+}
+
+.f27-footer__statement h2 {
+	max-width: 12ch;
+	margin-top: clamp(2rem, 5vw, 5rem);
+}
+
+.f27-footer__links .wp-block-navigation__container {
+	align-items: stretch;
+	gap: 0;
+	width: 100%;
+}
+
+.f27-footer__links .wp-block-navigation-item {
+	width: 100%;
+	padding-block: 0.8rem;
+	border-bottom: 1px solid var(--f27-line);
+}
+
+.f27-footer__links .wp-block-navigation-item:first-child {
+	border-top: 1px solid var(--f27-line);
+}
+
+.f27-footer__legal {
+	align-items: flex-start !important;
+	margin-top: clamp(4rem, 8vw, 8rem);
+	padding-top: 1.5rem;
+	border-top: 1px solid var(--f27-line);
+	color: var(--f27-muted);
+}
+
+.f27-footer__legal p {
+	max-width: 52ch;
+}
+
+/* Motion communicates hierarchy and section entry without scroll handlers. */
+.f27-motion-ready .f27-reveal {
+	opacity: 0;
+	transform: translateY(24px);
+}
+
+.f27-motion-ready .f27-reveal.is-visible {
+	opacity: 1;
+	transform: translateY(0);
+	transition: opacity 700ms var(--f27-ease), transform 700ms var(--f27-ease);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+	.f27-hero__copy > * {
+		animation: f27-enter 720ms var(--f27-ease) both;
+	}
+
+	.f27-hero__copy > :nth-child(2) {
+		animation-delay: 70ms;
+	}
+
+	.f27-hero__copy > :nth-child(3) {
+		animation-delay: 140ms;
+	}
+
+	.f27-hero__copy > :nth-child(4) {
+		animation-delay: 210ms;
+	}
+
+	.f27-hero__media {
+		animation: f27-media-enter 900ms var(--f27-ease) 120ms both;
+	}
+
+	.f27-assembly__parts::before {
+		animation: f27-beam linear both;
+		animation-range: entry 15% cover 75%;
+		animation-timeline: view();
+	}
+
+	.f27-menu-dialog[open] {
+		animation: f27-dialog-enter 320ms var(--f27-ease) both;
+	}
+}
+
+@keyframes f27-enter {
+	from {
+		opacity: 0;
+		transform: translateY(20px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+@keyframes f27-media-enter {
+	from {
+		opacity: 0;
+		transform: translateX(26px) scale(0.985);
+	}
+	to {
+		opacity: 1;
+		transform: translateX(0) scale(1);
+	}
+}
+
+@keyframes f27-beam {
+	from {
+		transform: scaleY(0.25);
+	}
+	to {
+		transform: scaleY(1);
+	}
+}
+
+@keyframes f27-dialog-enter {
+	from {
+		opacity: 0;
+		transform: translateY(-12px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+@media (max-width: 1100px) {
+	.f27-demo-label {
+		display: none;
+	}
+
+	.f27-desktop-nav .wp-block-navigation__container {
+		gap: 1rem;
+	}
+
+	.f27-theme-toggle {
+		font-size: 0;
+	}
+
+	.f27-theme-toggle::after {
+		content: "Тема";
+		font-size: 0.7rem;
+	}
+}
+
+@media (max-width: 959px) {
+	:root {
+		--f27-header-height: 64px;
+	}
+
+	.admin-bar .f27-site-header {
+		top: 46px;
+	}
+
+	.f27-desktop-nav {
+		display: none;
+	}
+
+	.f27-header__inner {
+		gap: 0.75rem;
+	}
+
+	.f27-header-actions {
+		margin-left: auto;
+	}
+
+	.f27-menu-open {
+		display: inline-flex;
+		align-items: center;
+	}
+
+	.f27-header-actions > .f27-theme-toggle {
+		display: none;
+	}
+
+	.f27-hero {
+		min-height: auto;
+		padding-block: 1.5rem 3rem;
+	}
+
+	.f27-hero__grid {
+		grid-template-columns: 1fr;
+		min-height: auto;
+		gap: 2rem;
+	}
+
+	.f27-hero__copy {
+		min-height: calc(100dvh - var(--f27-header-height) - 3rem);
+		justify-content: center;
+	}
+
+	.f27-hero__title {
+		max-width: 13ch;
+		font-size: clamp(3rem, 12vw, 5.4rem) !important;
+	}
+
+	.f27-hero__media img {
+		min-height: 0;
+		aspect-ratio: 4 / 3;
+	}
+
+	.f27-assembly__grid,
+	.f27-materials__grid,
+	.f27-specification__grid,
+	.f27-product-single__hero,
+	.f27-product-single__body,
+	.f27-not-found__grid {
+		grid-template-columns: 1fr;
+	}
+
+	.f27-assembly__copy {
+		position: static;
+	}
+
+	.f27-assembly__image {
+		max-width: 44rem;
+		margin-left: auto;
+	}
+
+	.f27-assembly__image img {
+		min-height: 0;
+	}
+
+	.f27-materials__copy {
+		max-width: 42rem;
+		margin-left: clamp(0rem, 10vw, 5rem);
+	}
+
+	.f27-specification__request {
+		max-width: 42rem;
+		margin-left: auto;
+	}
+}
+
+@media (max-width: 767px) {
+	:root {
+		--f27-gutter: 1rem;
+		--f27-section-space: clamp(4rem, 19vw, 6rem);
+	}
+
+	body.form27-theme {
+		font-size: 1rem;
+	}
+
+	.f27-site-header,
+	.f27-site-footer,
+	.f27-section,
+	.f27-entry,
+	.f27-archive,
+	.f27-index,
+	.f27-search,
+	.f27-product-single,
+	.f27-case-single,
+	.f27-not-found {
+		padding-right: var(--f27-gutter);
+		padding-left: var(--f27-gutter);
+	}
+
+	.f27-section-heading--narrow,
+	.f27-cases-section .f27-section-heading,
+	.f27-specification__heading {
+		margin-left: 0;
+	}
+
+	.f27-section-heading,
+	.f27-specification__heading {
+		margin-bottom: 2.5rem;
+	}
+
+	.f27-header__inner {
+		padding-inline: 0;
+	}
+
+	.f27-wordmark {
+		font-size: 0.9375rem;
+	}
+
+	.f27-menu-dialog__footer {
+		align-items: stretch;
+		flex-direction: column;
+	}
+
+	.f27-menu-dialog__footer > * {
+		width: 100%;
+		text-align: center;
+	}
+
+	.f27-menu-dialog__footer .f27-theme-toggle {
+		font-size: 0.7rem;
+	}
+
+	.f27-menu-dialog__footer .f27-theme-toggle::after {
+		content: none;
+	}
+
+	.f27-hero__copy {
+		min-height: auto;
+		padding-block: clamp(2rem, 8vh, 4rem);
+	}
+
+	.f27-hero__title {
+		max-width: 12ch;
+		font-size: clamp(2.85rem, 14vw, 4.25rem) !important;
+		line-height: 0.94;
+	}
+
+	.f27-hero__actions {
+		align-items: stretch;
+		flex-direction: column;
+		width: 100%;
+	}
+
+	.f27-hero__actions .wp-block-button,
+	.f27-hero__actions .wp-block-button__link {
+		width: 100%;
+	}
+
+	.f27-assembly__grid,
+	.f27-materials__grid,
+	.f27-specification__grid,
+	.f27-product-single__hero,
+	.f27-product-single__body,
+	.f27-not-found__grid {
+		gap: 2.5rem;
+	}
+
+	.f27-assembly__part--optic,
+	.f27-assembly__part--control {
+		margin-left: 0;
+	}
+
+	.f27-assembly__image,
+	.f27-materials__copy,
+	.f27-specification__request {
+		width: 100%;
+		margin-left: 0;
+	}
+
+	.f27-materials__media {
+		grid-template-columns: minmax(0, 8fr) minmax(0, 5fr);
+		grid-template-rows: 2rem auto 2rem;
+	}
+
+	.f27-footer__primary {
+		grid-template-columns: 1fr !important;
+		gap: 3rem;
+	}
+
+	.f27-footer__legal {
+		display: grid !important;
+		gap: 1rem;
+	}
+
+	.f27-query .wp-block-post-template {
+		grid-template-columns: 1fr;
+	}
+
+	.f27-not-found__grid {
+		align-items: start;
+	}
+
+	.f27-not-found__code {
+		font-size: clamp(7rem, 38vw, 11rem) !important;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	html {
+		scroll-behavior: auto;
+	}
+
+	*,
+	*::before,
+	*::after {
+		animation-duration: 0.01ms !important;
+		animation-iteration-count: 1 !important;
+		scroll-behavior: auto !important;
+		transition-duration: 0.01ms !important;
+	}
+
+	.f27-motion-ready .f27-reveal {
+		opacity: 1;
+		transform: none;
+	}
+
+	.f27-assembly__parts::before {
+		transform: scaleY(1);
+	}
+}
+
+@media (forced-colors: active) {
+	.f27-hero__media::after,
+	.f27-assembly__parts::before {
+		background: CanvasText;
+	}
+
+	.f27-theme-toggle,
+	.f27-menu-open,
+	.f27-menu-dialog button,
+	.wp-block-button__link {
+		border: 1px solid ButtonText !important;
+	}
+}

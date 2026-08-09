@@ -1,0 +1,17 @@
+@import url("./main.css");
+
+.editor-styles-wrapper {
+	background: var(--f27-bg);
+	color: var(--f27-text);
+}
+
+.editor-styles-wrapper .f27-site-header {
+	position: relative;
+	top: auto;
+}
+
+.editor-styles-wrapper .f27-motion-ready .f27-reveal,
+.editor-styles-wrapper .f27-reveal {
+	opacity: 1;
+	transform: none;
+}

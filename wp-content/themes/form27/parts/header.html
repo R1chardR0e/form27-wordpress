@@ -1,0 +1,47 @@
+<!-- wp:group {"align":"full","className":"f27-site-header","layout":{"type":"constrained"}} -->
+<div class="wp-block-group alignfull f27-site-header">
+	<!-- wp:group {"align":"wide","className":"f27-header__inner","layout":{"type":"flex","flexWrap":"nowrap","justifyContent":"space-between","verticalAlignment":"center"}} -->
+	<div class="wp-block-group alignwide f27-header__inner">
+		<!-- wp:group {"className":"f27-brand","layout":{"type":"flex","flexWrap":"nowrap","verticalAlignment":"center"}} -->
+		<div class="wp-block-group f27-brand">
+			<!-- wp:site-logo {"width":112,"shouldSyncIcon":false,"className":"f27-logo"} /-->
+			<!-- wp:site-title {"level":0,"className":"f27-wordmark"} /-->
+			<!-- wp:paragraph {"className":"f27-demo-label","fontSize":"micro"} -->
+			<p class="f27-demo-label has-micro-font-size">Демо-проект</p>
+			<!-- /wp:paragraph -->
+		</div>
+		<!-- /wp:group -->
+
+		<!-- wp:navigation {"overlayMenu":"never","className":"f27-desktop-nav","layout":{"type":"flex","justifyContent":"center","flexWrap":"nowrap"}} -->
+			<!-- wp:navigation-link {"label":"Каталог","url":"/catalog/","kind":"custom"} /-->
+			<!-- wp:navigation-link {"label":"Проекты","url":"/projects/","kind":"custom"} /-->
+			<!-- wp:navigation-link {"label":"Спецификация","url":"/specification/","kind":"custom"} /-->
+			<!-- wp:navigation-link {"label":"Контакты","url":"/contacts/","kind":"custom"} /-->
+		<!-- /wp:navigation -->
+
+		<!-- wp:html -->
+		<div class="f27-header-actions">
+			<button class="f27-theme-toggle" type="button" data-f27-theme-toggle aria-label="Изменить цветовую схему">Тема: авто</button>
+			<button class="f27-menu-open" type="button" data-f27-menu-open aria-haspopup="dialog" aria-controls="f27-menu-dialog" aria-expanded="false">Меню</button>
+		</div>
+		<dialog class="f27-menu-dialog" id="f27-menu-dialog" data-f27-menu-dialog aria-labelledby="f27-menu-title">
+			<div class="f27-menu-dialog__bar">
+				<strong id="f27-menu-title">FORM 27</strong>
+				<button type="button" data-f27-menu-close>Закрыть</button>
+			</div>
+			<nav class="f27-menu-dialog__nav" data-f27-dialog-navigation aria-label="Основная навигация">
+				<a href="/catalog/">Каталог</a>
+				<a href="/projects/">Проекты</a>
+				<a href="/specification/">Спецификация</a>
+				<a href="/contacts/">Контакты</a>
+			</nav>
+			<div class="f27-menu-dialog__footer">
+				<button class="f27-theme-toggle" type="button" data-f27-theme-toggle aria-label="Изменить цветовую схему">Тема: авто</button>
+				<a href="/#configurator">Собрать проект</a>
+			</div>
+		</dialog>
+		<!-- /wp:html -->
+	</div>
+	<!-- /wp:group -->
+</div>
+<!-- /wp:group -->

@@ -1,0 +1,30 @@
+# Dependencies and local tools
+node_modules/
+vendor/
+
+# Generated artifacts
+dist/
+release/
+.build/
+playwright-report/
+test-results/
+.lighthouseci/
+lighthouse-reports/
+.wrangler/
+coverage/
+assets/source-images/
+assets/optimized/
+
+# Local WordPress and environment state
+.env
+wordpress/
+wp-content/database/
+wp-content/uploads/
+!wp-content/uploads/.gitkeep
+
+# Editors and operating systems
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.log

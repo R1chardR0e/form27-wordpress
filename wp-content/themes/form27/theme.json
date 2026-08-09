@@ -1,0 +1,288 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/theme.json",
+  "version": 3,
+  "settings": {
+    "appearanceTools": true,
+    "color": {
+      "custom": false,
+      "customDuotone": false,
+      "customGradient": false,
+      "defaultDuotone": false,
+      "defaultGradients": false,
+      "defaultPalette": false,
+      "palette": [
+        {
+          "color": "#171918",
+          "name": "Graphite",
+          "slug": "graphite"
+        },
+        {
+          "color": "#F2F1EC",
+          "name": "Milk",
+          "slug": "milk"
+        },
+        {
+          "color": "#B8BCBA",
+          "name": "Aluminium",
+          "slug": "aluminium"
+        },
+        {
+          "color": "#F05A28",
+          "name": "Signal orange",
+          "slug": "signal-orange"
+        },
+        {
+          "color": "#242725",
+          "name": "Raised graphite",
+          "slug": "raised-graphite"
+        },
+        {
+          "color": "#E3E5E2",
+          "name": "Raised milk",
+          "slug": "raised-milk"
+        }
+      ]
+    },
+    "layout": {
+      "contentSize": "760px",
+      "wideSize": "1440px"
+    },
+    "spacing": {
+      "blockGap": true,
+      "customSpacingSize": true,
+      "defaultSpacingSizes": false,
+      "spacingSizes": [
+        {
+          "name": "2XS",
+          "size": "clamp(0.5rem, 0.45rem + 0.2vw, 0.625rem)",
+          "slug": "20"
+        },
+        {
+          "name": "XS",
+          "size": "clamp(0.75rem, 0.66rem + 0.35vw, 1rem)",
+          "slug": "30"
+        },
+        {
+          "name": "S",
+          "size": "clamp(1rem, 0.82rem + 0.7vw, 1.5rem)",
+          "slug": "40"
+        },
+        {
+          "name": "M",
+          "size": "clamp(1.5rem, 1.14rem + 1.4vw, 2.5rem)",
+          "slug": "50"
+        },
+        {
+          "name": "L",
+          "size": "clamp(2.5rem, 1.78rem + 2.8vw, 4.5rem)",
+          "slug": "60"
+        },
+        {
+          "name": "XL",
+          "size": "clamp(4rem, 2.6rem + 5.4vw, 8rem)",
+          "slug": "70"
+        }
+      ],
+      "units": [
+        "px",
+        "rem",
+        "em",
+        "%",
+        "vw",
+        "vh"
+      ]
+    },
+    "typography": {
+      "customFontSize": false,
+      "dropCap": false,
+      "fluid": true,
+      "fontFamilies": [
+        {
+          "fontFamily": "Onest, 'Segoe UI Variable', 'Segoe UI', Arial, sans-serif",
+          "name": "Onest",
+          "slug": "onest"
+        },
+        {
+          "fontFamily": "'IBM Plex Mono', 'Cascadia Mono', 'SFMono-Regular', Consolas, monospace",
+          "name": "IBM Plex Mono",
+          "slug": "ibm-plex-mono"
+        }
+      ],
+      "fontSizes": [
+        {
+          "fluid": false,
+          "name": "Micro",
+          "size": "0.75rem",
+          "slug": "micro"
+        },
+        {
+          "fluid": false,
+          "name": "Small",
+          "size": "0.875rem",
+          "slug": "small"
+        },
+        {
+          "fluid": {
+            "min": "1rem",
+            "max": "1.125rem"
+          },
+          "name": "Body",
+          "size": "1.0625rem",
+          "slug": "body"
+        },
+        {
+          "fluid": {
+            "min": "1.25rem",
+            "max": "1.625rem"
+          },
+          "name": "Lead",
+          "size": "1.5rem",
+          "slug": "lead"
+        },
+        {
+          "fluid": {
+            "min": "2rem",
+            "max": "3.25rem"
+          },
+          "name": "Section",
+          "size": "3rem",
+          "slug": "section"
+        },
+        {
+          "fluid": {
+            "min": "3rem",
+            "max": "6rem"
+          },
+          "name": "Display",
+          "size": "5.5rem",
+          "slug": "display"
+        }
+      ],
+      "fontStyle": true,
+      "fontWeight": true,
+      "letterSpacing": true,
+      "lineHeight": true,
+      "textDecoration": true,
+      "textTransform": true
+    },
+    "useRootPaddingAwareAlignments": true
+  },
+  "styles": {
+    "color": {
+      "background": "#F2F1EC",
+      "text": "#171918"
+    },
+    "elements": {
+      "button": {
+        "border": {
+          "radius": "2px",
+          "width": "1px"
+        },
+        "color": {
+          "background": "#F05A28",
+          "text": "#171918"
+        },
+        "spacing": {
+          "padding": {
+            "bottom": "0.9rem",
+            "left": "1.2rem",
+            "right": "1.2rem",
+            "top": "0.9rem"
+          }
+        },
+        "typography": {
+          "fontFamily": "var(--wp--preset--font-family--ibm-plex-mono)",
+          "fontSize": "0.8125rem",
+          "fontWeight": "600",
+          "letterSpacing": "0.04em",
+          "textTransform": "uppercase"
+        }
+      },
+      "heading": {
+        "typography": {
+          "fontFamily": "var(--wp--preset--font-family--onest)",
+          "fontWeight": "560",
+          "letterSpacing": "-0.045em",
+          "lineHeight": "0.98"
+        }
+      },
+      "link": {
+        "color": {
+          "text": "inherit"
+        },
+        "typography": {
+          "textDecoration": "none"
+        }
+      }
+    },
+    "spacing": {
+      "blockGap": "1.5rem",
+      "padding": {
+        "left": "var(--wp--preset--spacing--40)",
+        "right": "var(--wp--preset--spacing--40)"
+      }
+    },
+    "typography": {
+      "fontFamily": "var(--wp--preset--font-family--onest)",
+      "fontSize": "var(--wp--preset--font-size--body)",
+      "fontWeight": "430",
+      "lineHeight": "1.55"
+    },
+    "blocks": {
+      "core/button": {
+        "spacing": {
+          "margin": {
+            "bottom": "0"
+          }
+        }
+      },
+      "core/heading": {
+        "spacing": {
+          "margin": {
+            "bottom": "0",
+            "top": "0"
+          }
+        }
+      },
+      "core/image": {
+        "border": {
+          "radius": "2px"
+        }
+      },
+      "core/navigation": {
+        "typography": {
+          "fontFamily": "var(--wp--preset--font-family--ibm-plex-mono)",
+          "fontSize": "0.75rem",
+          "fontWeight": "550",
+          "letterSpacing": "0.045em",
+          "textTransform": "uppercase"
+        }
+      },
+      "core/paragraph": {
+        "spacing": {
+          "margin": {
+            "bottom": "0",
+            "top": "0"
+          }
+        }
+      },
+      "core/post-content": {
+        "spacing": {
+          "blockGap": "1.5rem"
+        }
+      }
+    }
+  },
+  "templateParts": [
+    {
+      "area": "header",
+      "name": "header",
+      "title": "Header"
+    },
+    {
+      "area": "footer",
+      "name": "footer",
+      "title": "Footer"
+    }
+  ]
+}
