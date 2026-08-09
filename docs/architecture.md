@@ -7,8 +7,8 @@ FORM 27 has one source of WordPress content and two presentation runtimes:
 1. The full runtime is WordPress 7.0 with PHP 8.2 or 8.3. The `form27` block
    theme owns templates and visual tokens. `form27-core` owns content models,
    validation, dynamic blocks, REST endpoints, seeding and request retention.
-2. The static runtime is a crawl of that seeded WordPress state. It is published
-   on Cloudflare Pages and keeps browser-only behavior. It has no PHP, shared
+2. The static runtime is a crawl of that seeded WordPress state. It is prepared
+   for Cloudflare Pages and keeps browser-only behavior. It has no PHP, shared
    database, mail transport or persistent requests.
 
 The static exporter injects this immutable boot contract before frontend scripts:

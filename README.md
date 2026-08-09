@@ -78,11 +78,14 @@ PHP syntax and WordPress Coding Standards run in GitHub Actions on PHP 8.2 and
 
 ## Free public delivery
 
-`dist/` is deployed to Cloudflare Pages. It retains the catalog, configurator,
-local project and PDF export, but it deliberately cannot persist or email a
-request. A visible message explains that behavior before submission. Each public
-Playground visitor receives a separate temporary WordPress database; requests
-created there disappear with that browser session.
+`dist/` is ready for Cloudflare Pages. The workflow deploys it after
+`CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` are configured; without those
+secrets it still builds and verifies the exact artifact but skips publication.
+The static runtime retains the catalog, configurator, local project and PDF
+export, but it deliberately cannot persist or email a request. A visible message
+explains that behavior before submission. The currently shared public demo is
+WordPress Playground, where every visitor receives a separate temporary database
+and requests disappear with that browser session.
 
 Deployment and secret setup are documented in
 [`docs/deployment.md`](docs/deployment.md). Architecture and API contracts are in
