@@ -70,13 +70,13 @@ final class F27_REST {
 	 * @return WP_REST_Response|WP_Error
 	 */
 	public static function get_health() {
-		$home         = get_page_by_path( 'home', OBJECT, 'page' );
-		$active_theme = in_array(
+		$home          = get_page_by_path( 'home', OBJECT, 'page' );
+		$active_theme  = in_array(
 			'form27',
 			array_filter( array( get_stylesheet(), get_template() ) ),
 			true
 		);
-		$home_ready = $home instanceof WP_Post
+		$home_ready    = $home instanceof WP_Post
 			&& (int) get_option( 'page_on_front' ) === $home->ID
 			&& str_contains( $home->post_content, 'wp:form27/catalog' )
 			&& str_contains( $home->post_content, 'wp:form27/configurator' )
