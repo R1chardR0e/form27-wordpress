@@ -19,6 +19,16 @@ final class F27_REST {
 	public static function register_routes(): void {
 		register_rest_route(
 			self::NAMESPACE,
+			'/health',
+			array(
+				'methods'             => WP_REST_Server::READABLE,
+				'callback'            => array( self::class, 'get_health' ),
+				'permission_callback' => '__return_true',
+			)
+		);
+
+		register_rest_route(
+			self::NAMESPACE,
 			'/products',
 			array(
 				'methods'             => WP_REST_Server::READABLE,
@@ -51,6 +61,46 @@ final class F27_REST {
 				'permission_callback' => '__return_true',
 			)
 		);
+	}
+
+	/**
+	 * Report readiness only after the theme and editable demo content exist.
+	 * The local browser harness uses this to avoid racing Blueprint activation.
+	 *
+	 * @return WP_REST_Response|WP_Error
+	 */
+	public static function get_health() {
+		$home         = get_page_by_path( 'home', OBJECT, 'page' );
+		$active_theme = in_array(
+			'form27',
+			array_filter( array( get_stylesheet(), get_template() ) ),
+			true
+		);
+		$home_ready = $home instanceof WP_Post
+			&& (int) get_option( 'page_on_front' ) === $home->ID
+			&& str_contains( $home->post_content, 'wp:form27/catalog' )
+			&& str_contains( $home->post_content, 'wp:form27/configurator' )
+			&& substr_count( $home->post_content, '"tagName":"section"' ) >= 7;
+		$product_count = (int) ( wp_count_posts( 'f27_product' )->publish ?? 0 );
+
+		if ( ! $active_theme || ! $home_ready || $product_count < 6 ) {
+			return new WP_Error(
+				'f27_not_ready',
+				'FORM 27 is still initializing.',
+				array( 'status' => 503 )
+			);
+		}
+
+		$response = new WP_REST_Response(
+			array(
+				'schemaVersion' => 1,
+				'status'        => 'ready',
+			),
+			200
+		);
+		$response->header( 'Cache-Control', 'no-store' );
+
+		return $response;
 	}
 
 	public static function get_products( WP_REST_Request $request ): WP_REST_Response {

@@ -66,6 +66,16 @@ test.beforeEach(async ({ page }) => {
   await page.goto("/", { waitUntil: "networkidle" });
 });
 
+test("dynamic runtime reports a fully seeded site", async ({ request }) => {
+  test.skip(staticMode);
+  const response = await request.get("/wp-json/form27/v1/health");
+  expect(response.status()).toBe(200);
+  await expect(response.json()).resolves.toMatchObject({
+    schemaVersion: 1,
+    status: "ready",
+  });
+});
+
 test("the first viewport establishes the brand and primary action", async ({
   page,
 }) => {

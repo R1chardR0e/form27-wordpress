@@ -32,6 +32,11 @@ The REST endpoint accepts `page`, `per_page` (maximum 50), `s`, `collection`,
 `mounting`, `application` and `featured` query parameters. A `ProductV1` has the
 following shape:
 
+`GET /wp-json/form27/v1/health` is an uncached operational check for the local
+Playground and CI harness. It returns HTTP 503 while the Blueprint is activating
+and `{"schemaVersion":1,"status":"ready"}` only after the FORM 27 theme,
+editable home page and six demo products are available.
+
 ```json
 {
   "id": 101,

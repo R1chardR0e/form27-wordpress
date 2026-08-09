@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 final class F27_Seeder {
 	private const CORE_SAMPLE_PAGE_HASH = 'bdd3f0e81bba85fbadd3613f68d15f8f5b06aa2745bbd51a74cf6d2ec440072f';
-	private const MIGRATION_VERSION     = '2026-08-09.3';
+	private const MIGRATION_VERSION     = '2026-08-09.4';
 	private const MIGRATION_OPTION      = 'f27_migration_version';
 	private const MEDIA_MARKER          = '_f27_seed_asset';
 
@@ -218,16 +218,28 @@ final class F27_Seeder {
 		$existing         = get_page_by_path( 'home', OBJECT, 'page' );
 		$pattern_content  = self::home_pattern_content();
 		$fallback_content = self::fallback_home_content();
+		$migrate_pattern  = false;
 		if ( $existing instanceof WP_Post && ! $force ) {
 			$seed_source        = (string) get_post_meta( $existing->ID, '_f27_seed_source', true );
+			$seed_hash          = (string) get_post_meta( $existing->ID, '_f27_seed_home_hash', true );
+			$seed_hash_matches  = '' === $seed_hash
+				|| hash_equals( $seed_hash, hash( 'sha256', $existing->post_content ) );
 			$untouched_fallback = 'Главная' === $existing->post_title
+				&& 'publish' === $existing->post_status
 				&& $fallback_content === $existing->post_content
 				&& ( 'fallback' === $seed_source || (
 					(int) get_option( 'page_on_front' ) === $existing->ID
 					&& $existing->post_date === $existing->post_modified
 					&& $existing->post_date_gmt === $existing->post_modified_gmt
 				) );
-			if ( ! $untouched_fallback || '' === trim( $pattern_content ) ) {
+			$untouched_pattern  = 'Главная' === $existing->post_title
+				&& 'publish' === $existing->post_status
+				&& 'pattern' === $seed_source
+				&& $seed_hash_matches
+				&& $existing->post_content !== $pattern_content
+				&& self::normalize_home_asset_origins( $existing->post_content ) === $pattern_content;
+			$migrate_pattern    = $untouched_pattern;
+			if ( ( ! $untouched_fallback && ! $untouched_pattern ) || '' === trim( $pattern_content ) ) {
 				if ( is_array( $result ) ) {
 					++$result['skipped'];
 				}
@@ -237,15 +249,22 @@ final class F27_Seeder {
 
 		$content = '' !== trim( $pattern_content ) ? $pattern_content : $fallback_content;
 
-		$postarr = array(
-			'post_type'    => 'page',
-			'post_status'  => 'publish',
-			'post_name'    => 'home',
-			'post_title'   => 'Главная',
-			'post_content' => $content,
-		);
-		if ( $existing instanceof WP_Post ) {
-			$postarr['ID'] = $existing->ID;
+		if ( $existing instanceof WP_Post && $migrate_pattern ) {
+			$postarr = array(
+				'ID'           => $existing->ID,
+				'post_content' => $content,
+			);
+		} else {
+			$postarr = array(
+				'post_type'    => 'page',
+				'post_status'  => 'publish',
+				'post_name'    => 'home',
+				'post_title'   => 'Главная',
+				'post_content' => $content,
+			);
+			if ( $existing instanceof WP_Post ) {
+				$postarr['ID'] = $existing->ID;
+			}
 		}
 		$post_id = wp_insert_post( wp_slash( $postarr ), true );
 		if ( is_wp_error( $post_id ) ) {
@@ -255,6 +274,7 @@ final class F27_Seeder {
 			return;
 		}
 		update_post_meta( (int) $post_id, '_f27_seed_source', $content === $pattern_content ? 'pattern' : 'fallback' );
+		update_post_meta( (int) $post_id, '_f27_seed_home_hash', hash( 'sha256', $content ) );
 
 		if ( ! ( $existing instanceof WP_Post ) && ! get_option( 'page_on_front' ) ) {
 			update_option( 'show_on_front', 'page' );
@@ -319,6 +339,62 @@ final class F27_Seeder {
 		}
 
 		return substr_count( $content, '"tagName":"section"' ) >= 7;
+	}
+
+	/**
+	 * Replace only exact seeded image URLs from the current site and theme path.
+	 * Other hosts, filenames and content remain byte-for-byte unchanged.
+	 */
+	private static function normalize_home_asset_origins( string $content ): string {
+		$theme_uri    = untrailingslashit( get_theme_file_uri() );
+		$theme_host   = strtolower( (string) wp_parse_url( $theme_uri, PHP_URL_HOST ) );
+		$theme_port   = (int) wp_parse_url( $theme_uri, PHP_URL_PORT );
+		$site_origins = array_filter(
+			array_map(
+				static function ( string $url ): string {
+					$host = strtolower( (string) wp_parse_url( $url, PHP_URL_HOST ) );
+					$port = (int) wp_parse_url( $url, PHP_URL_PORT );
+
+					return '' === $host ? '' : $host . ':' . $port;
+				},
+				array( home_url( '/' ), site_url( '/' ) )
+			)
+		);
+		$theme_origin = $theme_host . ':' . $theme_port;
+
+		if ( '' === $theme_host || ! in_array( $theme_origin, $site_origins, true ) ) {
+			return $content;
+		}
+
+		$relative_theme_uri = untrailingslashit( wp_make_link_relative( $theme_uri ) );
+		$asset_files        = array(
+			'hero.avif',
+			'hero.webp',
+			'product-line-s48.avif',
+			'product-line-s48.webp',
+			'material-fold.avif',
+			'material-fold.webp',
+			'material-finishes.avif',
+			'material-finishes.webp',
+		);
+		$absolute_bases     = array_unique(
+			array(
+				untrailingslashit( set_url_scheme( $theme_uri, 'http' ) ),
+				untrailingslashit( set_url_scheme( $theme_uri, 'https' ) ),
+			)
+		);
+
+		foreach ( $absolute_bases as $absolute_base ) {
+			foreach ( $asset_files as $asset_file ) {
+				$content = str_replace(
+					$absolute_base . '/assets/images/' . $asset_file,
+					$relative_theme_uri . '/assets/images/' . $asset_file,
+					$content
+				);
+			}
+		}
+
+		return $content;
 	}
 
 	private static function fallback_home_content(): string {

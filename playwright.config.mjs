@@ -34,9 +34,7 @@ export default defineConfig({
         // Playground begins accepting HTTP before its Blueprint has activated
         // the project. Waiting for the project-owned endpoint avoids tests
         // racing the temporary default WordPress site.
-        url: staticMode
-          ? baseURL
-          : `${baseURL}/wp-json/form27/v1/products?per_page=1`,
+        url: staticMode ? baseURL : `${baseURL}/wp-json/form27/v1/health`,
         reuseExistingServer: !process.env.CI,
         timeout: 240_000,
         stdout: "pipe",

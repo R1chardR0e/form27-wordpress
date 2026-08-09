@@ -96,6 +96,17 @@ try {
   // The missing-file error above is more useful.
 }
 
+try {
+  const homePattern = await read("wp-content/themes/form27/patterns/home.php");
+  if (!homePattern.includes("wp_make_link_relative( $form27_theme_uri )")) {
+    errors.push(
+      "The home pattern must keep theme image URLs relative for HTTPS Playground and subdirectory installs",
+    );
+  }
+} catch (error) {
+  errors.push(`The FORM 27 home pattern is invalid: ${error.message}`);
+}
+
 if (errors.length) {
   console.error(errors.map((error) => `- ${error}`).join("\n"));
   process.exitCode = 1;
