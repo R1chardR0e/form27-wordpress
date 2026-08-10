@@ -38,7 +38,8 @@ The production Pages project is connected directly to GitHub:
 - production branch: `main`;
 - build command: `npm run export:static`;
 - build output directory: `dist`;
-- public URL: <https://form27-wordpress.pages.dev/>.
+- branded public URL: <https://form27.andrey-digital.ru/>;
+- Pages fallback: <https://form27-wordpress.pages.dev/>.
 
 Every push to `main` triggers a Cloudflare build and production deployment. The
 Pages build uses the checked-in `wrangler.toml`, while the exporter creates the

@@ -11,7 +11,7 @@ offer.
 
 ![FORM 27 home screen](docs/form27-preview.webp)
 
-[Open the permanent static demo on Cloudflare Pages](https://form27-wordpress.pages.dev/).
+[Open the permanent static demo](https://form27.andrey-digital.ru/).
 [Open the temporary WordPress demo in Playground](https://playground.wordpress.net/?blueprint-url=https%3A%2F%2Fraw.githubusercontent.com%2FR1chardR0e%2Fform27-wordpress%2Fmain%2Fplayground-blueprint.json).
 The design and implementation decisions are grounded in the
 [`БЕРЕГ 61°` source and live-site audit](docs/bereg-audit.md).
@@ -80,10 +80,12 @@ PHP syntax and WordPress Coding Standards run in GitHub Actions on PHP 8.2 and
 ## Free public delivery
 
 The permanent static demo is published at
-[`form27-wordpress.pages.dev`](https://form27-wordpress.pages.dev/). Cloudflare
-Pages is connected directly to `R1chardR0e/form27-wordpress`; each push to
-`main` runs `npm run export:static` and publishes `dist/`. The GitHub workflow
-still builds and verifies the same artifact independently, and its optional
+[`form27.andrey-digital.ru`](https://form27.andrey-digital.ru/), with
+[`form27-wordpress.pages.dev`](https://form27-wordpress.pages.dev/) retained as
+the Pages fallback. Cloudflare Pages is connected directly to
+`R1chardR0e/form27-wordpress`; each push to `main` runs
+`npm run export:static` and publishes `dist/`. The GitHub workflow still builds
+and verifies the same artifact independently, and its optional
 credential-scoped deploy job remains available as a fallback.
 
 The static runtime retains the catalog, configurator, local project and PDF
