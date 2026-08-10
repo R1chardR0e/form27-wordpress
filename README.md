@@ -1,56 +1,58 @@
 # FORM 27
 
-FORM 27 is a design-first WordPress demonstration for a fictional manufacturer
-of architectural lighting. It combines a native block theme, a companion plugin,
-an interactive product configurator, a saved specification and client-side PDF
-generation.
+FORM 27 — дизайн-ориентированный демонстрационный проект на WordPress для
+вымышленного производителя архитектурного освещения. Он объединяет нативную
+блочную тему, отдельный плагин, интерактивный конфигуратор светильников,
+сохранение спецификации и создание PDF непосредственно в браузере.
 
-The products, specifications, prices, projects and contact details are fictional.
-The repository is a portfolio case, not technical documentation or a commercial
-offer.
+Все товары, характеристики, цены, проекты и контактные данные вымышлены.
+Репозиторий представляет собой портфолио-кейс, а не техническую документацию
+или коммерческое предложение.
 
-![FORM 27 home screen](docs/form27-preview.webp)
+![Главная страница FORM 27](docs/form27-preview.webp)
 
-[Open the permanent static demo](https://form27.andrey-digital.ru/).
-[Open the temporary WordPress demo in Playground](https://playground.wordpress.net/?blueprint-url=https%3A%2F%2Fraw.githubusercontent.com%2FR1chardR0e%2Fform27-wordpress%2Fmain%2Fplayground-blueprint.json).
-The design and implementation decisions are grounded in the
-[`БЕРЕГ 61°` source and live-site audit](docs/bereg-audit.md).
+[Открыть постоянную статическую демоверсию](https://form27.andrey-digital.ru/).
+[Открыть временную WordPress-демоверсию в Playground](https://playground.wordpress.net/?blueprint-url=https%3A%2F%2Fraw.githubusercontent.com%2FR1chardR0e%2Fform27-wordpress%2Fmain%2Fplayground-blueprint.json).
+Дизайн и технические решения основаны на
+[аудите исходников и опубликованного сайта «БЕРЕГ 61°»](docs/bereg-audit.md).
 
-## Local development without Docker
+## Локальная разработка без Docker
 
-Requirements: Node.js 20.18 or newer and npm.
+Требования: Node.js 20.18 или новее и npm.
 
 ```bash
 npm ci
 npm run dev
 ```
 
-The command starts a fresh WordPress 7.0 / PHP 8.3 site at
-`http://127.0.0.1:9400`, mounts the theme and plugin, runs the idempotent demo
-seed and signs in to the temporary admin area. No system PHP, database or Docker
-installation is needed. The Playground database is disposable.
+Команда запускает чистую установку WordPress 7.0 / PHP 8.3 по адресу
+`http://127.0.0.1:9400`, подключает тему и плагин, выполняет идемпотентное
+заполнение демонстрационными данными и авторизует пользователя во временной
+панели администратора. Системная установка PHP, базы данных или Docker не
+требуется. База данных Playground является временной.
 
-The public browser runtime is opened from the checked-in
-[`playground-blueprint.json`](playground-blueprint.json). It installs packaged
-assets from the latest GitHub Release, so a release must exist before that link
-works.
+Публичная браузерная версия запускается с помощью файла
+[`playground-blueprint.json`](playground-blueprint.json), находящегося в
+репозитории. Он устанавливает готовые файлы из последнего выпуска GitHub,
+поэтому для работы этой ссылки в репозитории должен существовать хотя бы один
+выпуск.
 
-## Docker alternative
+## Альтернативный запуск через Docker
 
-Docker is optional and was not available in the original development environment.
-For a conventional MariaDB installation:
+Docker не обязателен и отсутствовал в исходной среде разработки. Для обычной
+установки с MariaDB выполните:
 
 ```bash
 cp .env.example .env
-# Replace every password placeholder in .env.
+# Замените все шаблонные пароли в файле .env.
 npm run bootstrap:docker
 ```
 
-The site uses the configured `FORM27_HTTP_PORT`; Mailpit uses
-`FORM27_MAILPIT_PORT`. The bootstrap script never includes an admin password in
-the repository or command output.
+Сайт использует порт `FORM27_HTTP_PORT`, а Mailpit —
+`FORM27_MAILPIT_PORT`. Скрипт развёртывания не записывает пароль администратора
+в репозиторий и не выводит его в консоль.
 
-## Quality and release commands
+## Команды проверки качества и выпуска
 
 ```bash
 npm run check
@@ -60,46 +62,53 @@ npm run test:e2e:static
 npm run package
 ```
 
-- `check` validates JavaScript, formatting, project structure and utility tests.
-- `test:e2e` starts an isolated Playground and tests 390, 768 and 1440 px layouts.
-- `export:static` builds `dist/` from the same seeded WordPress state.
-- `test:e2e:static` serves that artifact on an isolated test port and repeats
-  the browser, accessibility, PDF and inert-request checks deterministically.
-- `preview:static` runs the actual Cloudflare Pages emulator on port 8788 for a
-  manual headers and redirects check.
-- `test:lighthouse` gates the static home, catalog and specification at 0.95 on
-  desktop and 0.90 on mobile for performance, accessibility and best practices.
-  SEO scoring is intentionally excluded because every portfolio-demo page is
-  explicitly `noindex`.
-- `package` creates installable theme/plugin ZIPs and SHA-256 checksums in
-  `release/`.
+- `check` проверяет JavaScript, форматирование, структуру проекта и модульные
+  тесты вспомогательных функций.
+- `test:e2e` запускает изолированный Playground и проверяет интерфейс на ширине
+  390, 768 и 1440 пикселей.
+- `export:static` собирает каталог `dist/` из того же состояния WordPress с
+  демонстрационными данными.
+- `test:e2e:static` запускает полученный результат на отдельном тестовом порту
+  и повторяет проверки интерфейса, доступности, создания PDF и отключённой
+  отправки заявок.
+- `preview:static` запускает настоящий эмулятор Cloudflare Pages на порту 8788
+  для ручной проверки заголовков и перенаправлений.
+- `test:lighthouse` проверяет главную, каталог и спецификацию. Минимальный порог
+  для производительности, доступности и лучших практик составляет 0,95 на
+  настольных устройствах и 0,90 на мобильных. Оценка SEO намеренно исключена,
+  поскольку все страницы портфолио-демоверсии имеют директиву `noindex`.
+- `package` создаёт в каталоге `release/` устанавливаемые ZIP-архивы темы и
+  плагина, а также их контрольные суммы SHA-256.
 
-PHP syntax and WordPress Coding Standards run in GitHub Actions on PHP 8.2 and
-8.3 because PHP is not installed on the original workstation.
+Проверка синтаксиса PHP и стандартов оформления кода WordPress выполняется в
+GitHub Actions на PHP 8.2 и 8.3, поскольку PHP не установлен на исходной рабочей
+станции.
 
-## Free public delivery
+## Публичная публикация
 
-The permanent static demo is published at
-[`form27.andrey-digital.ru`](https://form27.andrey-digital.ru/), with
-[`form27-wordpress.pages.dev`](https://form27-wordpress.pages.dev/) retained as
-the Pages fallback. Cloudflare Pages is connected directly to
-`R1chardR0e/form27-wordpress`; each push to `main` runs
-`npm run export:static` and publishes `dist/`. The GitHub workflow still builds
-and verifies the same artifact independently, and its optional
-credential-scoped deploy job remains available as a fallback.
+Постоянная статическая демоверсия опубликована по адресу
+[`form27.andrey-digital.ru`](https://form27.andrey-digital.ru/), а
+[`form27-wordpress.pages.dev`](https://form27-wordpress.pages.dev/) сохранён как
+резервный адрес Pages. Проект Cloudflare Pages напрямую подключён к репозиторию
+`R1chardR0e/form27-wordpress`: каждое изменение в ветке `main` запускает
+`npm run export:static` и публикует каталог `dist/`. GitHub Actions независимо
+собирает и проверяет тот же результат. Дополнительный шаг публикации с
+ограниченными правами доступа сохранён как резервный вариант.
 
-The static runtime retains the catalog, configurator, local project and PDF
-export, but it deliberately cannot persist or email a request. A visible message
-explains that behavior before submission. The WordPress Playground link remains
-the full CMS demo: every visitor receives a separate temporary database and
-requests disappear with that browser session.
+Статическая версия поддерживает каталог, конфигуратор, локальное сохранение
+проекта и экспорт PDF, но намеренно не сохраняет и не отправляет заявки по
+электронной почте. Перед отправкой пользователь видит соответствующее сообщение.
+Ссылка Playground остаётся полноценной CMS-демоверсией: каждый посетитель
+получает отдельную временную базу данных, которая удаляется вместе с сессией
+браузера.
 
-Deployment and secret setup are documented in
-[`docs/deployment.md`](docs/deployment.md). Architecture and API contracts are in
-[`docs/architecture.md`](docs/architecture.md) and
+Настройка публикации и секретов описана в
+[`docs/deployment.md`](docs/deployment.md). Архитектура и контракты API описаны в
+[`docs/architecture.md`](docs/architecture.md) и
 [`docs/data-contract.md`](docs/data-contract.md).
 
-## License
+## Лицензия
 
-Theme, plugin and project code are licensed under GPL-2.0-or-later. Generated
-portfolio imagery may only be reused where its generation terms permit.
+Код темы, плагина и проекта распространяется на условиях GPL-2.0-or-later.
+Изображения, созданные для портфолио, можно использовать только в рамках условий
+сервиса, с помощью которого они были сгенерированы.
